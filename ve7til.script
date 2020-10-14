@@ -107,8 +107,8 @@ Create Simulator Sim;
 Sim.AddData = {VE7TILData};
 Sim.Propagator = Prop;
 Sim.EpochFormat = UTCGregorian;
-Sim.InitialEpoch = '12 Oct 2020 03:52:08.458'; % 	2020-10-12 03:52:08.458
-Sim.FinalEpoch = '12 Oct 2020 09:25:54.854'; % 2020-10-12 09:25:54.854
+Sim.InitialEpoch = '13 Oct 2020 03:36:52.877'; % 	2020-10-13 03:36:52.877
+Sim.FinalEpoch = '13 Oct 2020 09:40:45.898'; % 2020-10-13 09:40:45.898 
 Sim.MeasurementTimeStep = 1;
 Sim.AddNoise = Off;
 
