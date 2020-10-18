@@ -1,0 +1,121 @@
+%----------------------------------------
+%---------- Spacecraft
+%----------------------------------------
+
+Create Spacecraft Tianwen1;
+Tianwen1.DateFormat = UTCGregorian;   
+Tianwen1.Epoch = '11 Oct 2020 04:54:58.64';
+Tianwen1.CoordinateSystem = SunICRF;
+Tianwen1.DisplayStateType = Cartesian;
+Tianwen1.X = 172197763.11319855
+Tianwen1.Y = 43449257.73092661
+Tianwen1.Z = 22404510.62131031
+Tianwen1.VX = -1.9157413856395984
+Tianwen1.VY = 25.93156833748881
+Tianwen1.VZ = 11.792478536081447
+Tianwen1.AddHardware = {HGA, XBandTX};
+Tianwen1.Id = '-9901491';
+
+Create Antenna HGA;
+
+Create Transmitter XBandTX;
+XBandTX.PrimaryAntenna = HGA;
+XBandTX.Frequency = 8400; % X-band in GMAT only goes up to 8.4GHz
+
+%----------------------------------------
+%---------- ForceModels
+%----------------------------------------
+
+Create ForceModel ForceModel;
+ForceModel.CentralBody = Sun;
+ForceModel.PointMasses = {Earth, Luna, Mercury, Venus, Jupiter, Mars, Sun, Saturn, Neptune, Uranus, Pluto};
+ForceModel.RelativisticCorrection = On;
+ForceModel.ErrorControl = None;
+
+%----------------------------------------
+%---------- Propagators
+%----------------------------------------
+
+Create Propagator Prop;
+Prop.FM = ForceModel;
+Prop.Type = PrinceDormand45;
+Prop.InitialStepSize = 60;
+Prop.MinStep = 0;
+Prop.MaxStep = 60;
+
+%----------------------------------------
+%---------- Coordinate Systems
+%----------------------------------------
+
+Create CoordinateSystem SunICRF;
+SunICRF.Origin = Sun;
+SunICRF.Axes = ICRF;
+
+
+%----------------------------------------
+%---------- GroundStations
+%----------------------------------------
+
+Create GroundStation VE7TIL;
+VE7TIL.CentralBody = Earth;
+VE7TIL.StateType = Spherical;
+VE7TIL.HorizonReference = Ellipsoid;
+VE7TIL.Location1 = 49.43479333333333;
+VE7TIL.Location2 = 236.33117;
+VE7TIL.Location3 = 0.04;
+VE7TIL.MinimumElevationAngle = 0;
+VE7TIL.AddHardware = {Dish, VE7TILRX};
+VE7TIL.ErrorModels = {VE7TILAzimuth, VE7TILElevation, VE7TILRangeRate};
+VE7TIL.Id = 1
+
+Create Antenna Dish;
+
+Create Receiver VE7TILRX;
+VE7TILRX.PrimaryAntenna = Dish;
+VE7TILRX.Id = '1';
+
+Create ErrorModel VE7TILAzimuth;
+VE7TILAzimuth.Type = 'Azimuth';
+VE7TILAzimuth.NoiseSigma = 1e-10;
+
+Create ErrorModel VE7TILElevation;
+VE7TILElevation.Type = 'Elevation';
+VE7TILElevation.NoiseSigma = 1e-10;
+
+Create ErrorModel VE7TILRangeRate;
+VE7TILRangeRate.Type = 'Range';
+VE7TILRangeRate.NoiseSigma = 1e-10;
+
+%----------------------------------------
+%---------- MeasurementModels
+%----------------------------------------
+
+Create TrackingFileSet VE7TILData;
+%VE7TILData.AddTrackingConfig = {{Tianwen1, VE7TIL}, 'Azimuth'};
+%VE7TILData.AddTrackingConfig = {{Tianwen1, VE7TIL}, 'Elevation'};
+VE7TILData.AddTrackingConfig = {{Tianwen1, VE7TIL}, 'Range'};
+VE7TILData.FileName = {'ve7til1.gmd'};
+VE7TILData.UseLightTime = true;
+VE7TILData.UseRelativityCorrection = true;
+VE7TILData.UseETminusTAI = true;
+
+%----------------------------------------
+%---------- Solvers
+%----------------------------------------
+
+Create Simulator Sim;
+Sim.AddData = {VE7TILData};
+Sim.Propagator = Prop;
+Sim.EpochFormat = UTCGregorian;
+Sim.InitialEpoch = '11 Oct 2020 03:00:00'; % 	2020-10-13 03:36:52.877
+Sim.FinalEpoch = '10 Feb 2021 13:13:39.542'; % Closest approach
+Sim.MeasurementTimeStep = 3600;
+Sim.AddNoise = Off;
+
+%----------------------------------------
+%---------- Mission Sequence
+%----------------------------------------
+
+BeginMissionSequence;
+RunSimulator Sim;
+%Propagate Prop(Tianwen1) {Tianwen1.ElapsedDays = 1};
