@@ -1,0 +1,214 @@
+%----------------------------------------
+%---------- Spacecraft
+%----------------------------------------
+
+
+%----------------------------------------
+%---------- Spacecraft
+%----------------------------------------
+
+%2020-10-30 03:43:22.964200 164051612.62052557 84231568.2915545 40873269.58779784 -7.829092234227916 23.706550387815227 10.691416310581786
+
+
+Create Spacecraft Tianwen1;
+GMAT Tianwen1.DateFormat = UTCGregorian;
+GMAT Tianwen1.Epoch = '30 Oct 2020 03:43:22.964';
+GMAT Tianwen1.CoordinateSystem = SunICRF;
+GMAT Tianwen1.DisplayStateType = Cartesian;
+GMAT Tianwen1.X = 164051612.62052557;
+GMAT Tianwen1.Y = 84231568.2915545;
+GMAT Tianwen1.Z = 40873269.58779784;
+GMAT Tianwen1.VX = -7.829092234227916;
+GMAT Tianwen1.VY = 23.706550387815227;
+GMAT Tianwen1.VZ = 10.691416310581786;
+GMAT Tianwen1.DryMass = 850;
+GMAT Tianwen1.Cd = 2.2;
+GMAT Tianwen1.Cr = 1.8;
+GMAT Tianwen1.DragArea = 15;
+GMAT Tianwen1.SRPArea = 1;
+GMAT Tianwen1.SPADDragScaleFactor = 1;
+GMAT Tianwen1.SPADSRPScaleFactor = 1;
+GMAT Tianwen1.NAIFId = -10001001;
+GMAT Tianwen1.NAIFIdReferenceFrame = -9001001;
+GMAT Tianwen1.OrbitColor = Red;
+GMAT Tianwen1.TargetColor = Teal;
+GMAT Tianwen1.OrbitErrorCovariance = [ 1e+70 0 0 0 0 0 ; 0 1e+70 0 0 0 0 ; 0 0 1e+70 0 0 0 ; 0 0 0 1e+70 0 0 ; 0 0 0 0 1e+70 0 ; 0 0 0 0 0 1e+70 ];
+GMAT Tianwen1.CdSigma = 1e+70;
+GMAT Tianwen1.CrSigma = 1e+70;
+GMAT Tianwen1.Id = '-9901491';
+GMAT Tianwen1.Attitude = CoordinateSystemFixed;
+GMAT Tianwen1.SPADSRPInterpolationMethod = Bilinear;
+GMAT Tianwen1.SPADSRPScaleFactorSigma = 1e+70;
+GMAT Tianwen1.SPADDragInterpolationMethod = Bilinear;
+GMAT Tianwen1.SPADDragScaleFactorSigma = 1e+70;
+GMAT Tianwen1.AddHardware = {HGA, XBandTX};
+GMAT Tianwen1.ModelFile = 'aura.3ds';
+GMAT Tianwen1.ModelOffsetX = 0;
+GMAT Tianwen1.ModelOffsetY = 0;
+GMAT Tianwen1.ModelOffsetZ = 0;
+GMAT Tianwen1.ModelRotationX = 0;
+GMAT Tianwen1.ModelRotationY = 0;
+GMAT Tianwen1.ModelRotationZ = 0;
+GMAT Tianwen1.ModelScale = 1;
+GMAT Tianwen1.AttitudeDisplayStateType = 'Quaternion';
+GMAT Tianwen1.AttitudeRateDisplayStateType = 'AngularVelocity';
+GMAT Tianwen1.AttitudeCoordinateSystem = EarthMJ2000Eq;
+GMAT Tianwen1.EulerAngleSequence = '321';
+
+%----------------------------------------
+%---------- Hardware Components
+%----------------------------------------
+
+Create Antenna HGA;
+GMAT HGA.DirectionX = 1;
+GMAT HGA.DirectionY = 0;
+GMAT HGA.DirectionZ = 0;
+GMAT HGA.SecondDirectionX = 0;
+GMAT HGA.SecondDirectionY = 1;
+GMAT HGA.SecondDirectionZ = 0;
+GMAT HGA.HWOriginInBCSX = 0;
+GMAT HGA.HWOriginInBCSY = 0;
+GMAT HGA.HWOriginInBCSZ = 0;
+
+Create Transmitter XBandTX;
+GMAT XBandTX.PrimaryAntenna = HGA;
+GMAT XBandTX.Frequency = 8400; % X-band in GMAT only goes up to 8.4GHz
+
+Create Antenna Dish;
+GMAT Dish.DirectionX = 1;
+GMAT Dish.DirectionY = 0;
+GMAT Dish.DirectionZ = 0;
+GMAT Dish.SecondDirectionX = 0;
+GMAT Dish.SecondDirectionY = 1;
+GMAT Dish.SecondDirectionZ = 0;
+GMAT Dish.HWOriginInBCSX = 0;
+GMAT Dish.HWOriginInBCSY = 0;
+GMAT Dish.HWOriginInBCSZ = 0;
+
+Create Receiver VE7TILRX;
+GMAT VE7TILRX.PrimaryAntenna = Dish;
+GMAT VE7TILRX.Id = '1';
+
+
+%----------------------------------------
+%---------- GroundStations
+%----------------------------------------
+
+Create GroundStation VE7TIL;
+GMAT VE7TIL.OrbitColor = Thistle;
+GMAT VE7TIL.TargetColor = DarkGray;
+GMAT VE7TIL.CentralBody = Earth;
+GMAT VE7TIL.StateType = Spherical;
+GMAT VE7TIL.HorizonReference = Ellipsoid;
+GMAT VE7TIL.Location1 = 49.43479333333333;
+GMAT VE7TIL.Location2 = 236.33117;
+GMAT VE7TIL.Location3 = 0.04;
+GMAT VE7TIL.Id = '1';
+GMAT VE7TIL.AddHardware = {Dish, VE7TILRX};
+GMAT VE7TIL.IonosphereModel = 'None';
+GMAT VE7TIL.TroposphereModel = 'None';
+GMAT VE7TIL.DataSource = 'Constant';
+GMAT VE7TIL.Temperature = 295.1;
+GMAT VE7TIL.Pressure = 1013.5;
+GMAT VE7TIL.Humidity = 55;
+GMAT VE7TIL.MinimumElevationAngle = 0;
+GMAT VE7TIL.ErrorModels = {VE7TILAzimuth, VE7TILElevation, VE7TILRangeRate};
+
+
+%----------------------------------------
+%---------- ForceModels
+%----------------------------------------
+
+Create ForceModel ForceModel;
+GMAT ForceModel.CentralBody = Sun;
+GMAT ForceModel.PointMasses = {Earth, Luna, Mercury, Venus, Jupiter, Mars, Sun, Saturn, Neptune, Uranus, Pluto};
+GMAT ForceModel.Drag = None;
+GMAT ForceModel.SRP = Off;
+GMAT ForceModel.RelativisticCorrection = On;
+GMAT ForceModel.ErrorControl = None;
+
+%----------------------------------------
+%---------- Propagators
+%----------------------------------------
+
+Create Propagator Prop;
+GMAT Prop.FM = ForceModel;
+GMAT Prop.Type = PrinceDormand45;
+GMAT Prop.InitialStepSize = 1;
+GMAT Prop.Accuracy = 9.999999999999999e-12;
+GMAT Prop.MinStep = 0;
+GMAT Prop.MaxStep = 60;
+GMAT Prop.MaxStepAttempts = 50;
+GMAT Prop.StopIfAccuracyIsViolated = true;
+
+%----------------------------------------
+%---------- Coordinate Systems
+%----------------------------------------
+
+Create CoordinateSystem SunICRF;
+GMAT SunICRF.Origin = Sun;
+GMAT SunICRF.Axes = ICRF;
+
+%----------------------------------------
+%---------- ErrorModels
+%----------------------------------------
+
+Create ErrorModel VE7TILAzimuth;
+GMAT VE7TILAzimuth.Type = 'Azimuth';
+GMAT VE7TILAzimuth.NoiseSigma = 1e-10;
+GMAT VE7TILAzimuth.Bias = 0;
+GMAT VE7TILAzimuth.BiasSigma = 1e+70;
+
+Create ErrorModel VE7TILElevation;
+GMAT VE7TILElevation.Type = 'Elevation';
+GMAT VE7TILElevation.NoiseSigma = 1e-10;
+GMAT VE7TILElevation.Bias = 0;
+GMAT VE7TILElevation.BiasSigma = 1e+70;
+
+Create ErrorModel VE7TILRangeRate;
+GMAT VE7TILRangeRate.Type = 'RangeRate';
+GMAT VE7TILRangeRate.NoiseSigma = 1e-10;
+GMAT VE7TILRangeRate.Bias = 0;
+GMAT VE7TILRangeRate.BiasSigma = 1e+70;
+
+%----------------------------------------
+%---------- MeasurementModels
+%----------------------------------------
+
+Create TrackingFileSet VE7TILData;
+%VE7TILData.AddTrackingConfig = {{Tianwen1, VE7TIL}, 'Azimuth'};
+%VE7TILData.AddTrackingConfig = {{Tianwen1, VE7TIL}, 'Elevation'};
+GMAT VE7TILData.AddTrackingConfig = {'{{Tianwen1,VE7TIL},RangeRate}'};
+GMAT VE7TILData.FileName = {'ve7til_tcm3.gmd'};
+GMAT VE7TILData.UseLightTime = true;
+GMAT VE7TILData.UseRelativityCorrection = true;
+GMAT VE7TILData.UseETminusTAI = true;
+GMAT VE7TILData.AberrationCorrection = 'None';
+GMAT VE7TILData.SimRangeModuloConstant = 1e+18;
+GMAT VE7TILData.SimDopplerCountInterval = 1;
+GMAT VE7TILData.SimTDRSNode4Frequency = 2000;
+GMAT VE7TILData.SimTDRSNode4FrequencyBand = 1;
+GMAT VE7TILData.SimTDRSSmarId = 0;
+GMAT VE7TILData.SimTDRSDataFlag = 0;
+
+%----------------------------------------
+%---------- Solvers
+%----------------------------------------
+
+Create Simulator Sim;
+GMAT Sim.AddData = {VE7TILData};
+GMAT Sim.Propagator = Prop
+GMAT Sim.EpochFormat = UTCGregorian;
+GMAT Sim.InitialEpoch = '30 Oct 2020 04:00:00'; %  2020-10-13 03:36:52.877
+GMAT Sim.FinalEpoch = '30 Nov 2020 23:59:59'; % 2020-10-13 09:40:45.898 
+GMAT Sim.MeasurementTimeStep = 1;
+GMAT Sim.AddNoise = Off;
+
+%----------------------------------------
+%---------- Mission Sequence
+%----------------------------------------
+
+BeginMissionSequence;
+RunSimulator Sim;
+%Propagate Prop(Tianwen1) {Tianwen1.ElapsedDays = 1};
+
