@@ -1,0 +1,230 @@
+%-----------------------------------------------------------------------------------------
+%% 	Create and configure the spacecraft, spacecraft transponder, and related parameters 
+%-----------------------------------------------------------------------------------------
+
+%  Create the Mars Interial Frame
+
+Create CoordinateSystem MarsInertial;
+GMAT MarsInertial.Origin = Mars;
+GMAT MarsInertial.Axes = BodyInertial;
+
+
+
+Create Spacecraft Tianwen1;
+Tianwen1.DateFormat = UTCGregorian;
+Tianwen1.CoordinateSystem = MarsInertial;
+Tianwen1.Epoch = '14 Feb 2021 23:45:31.728';
+Tianwen1.X = -64168.946045196935
+Tianwen1.Y = 168923.8173005167
+Tianwen1.Z = -31809.135823795663
+Tianwen1.VX = -0.11288324817806418
+Tianwen1.VY = 0.025638249144715353
+Tianwen1.VZ = -0.0034379641848915473
+
+
+
+Tianwen1.Id               = 11111;
+Tianwen1.AddHardware      = {HGA, SatTransponder};
+
+
+%	Spacecraft electronics. 
+Create Antenna HGA;
+Create Transponder SatTransponder;
+
+SatTransponder.PrimaryAntenna  = HGA;
+SatTransponder.HardwareDelay   = 1e-06;		%in seconds
+SatTransponder.TurnAroundRatio = '880/749';
+
+%-----------------------------------------------------------------------------------------
+%%  	Create and configure the Ground Station and related parameters
+%-----------------------------------------------------------------------------------------
+
+%  Ground Station electronics. 
+Create Antenna DSNAntenna;
+Create Transmitter DSNTransmitter;
+Create Receiver DSNReceiver;
+
+DSNTransmitter.Frequency      = 7200;   %MHz.
+DSNTransmitter.PrimaryAntenna = DSNAntenna;
+DSNReceiver.PrimaryAntenna    = DSNAntenna;
+
+%   Create Ground station and associated error models
+Create GroundStation CAN;
+CAN.CentralBody           = Earth;
+CAN.StateType             = Cartesian;
+CAN.HorizonReference      = Ellipsoid;
+CAN.Location1             = -4461.083514
+CAN.Location2             = 2682.281745
+CAN.Location3             =  -3674.570392
+CAN.Id                    = 22222;
+CAN.AddHardware           = {DSNTransmitter, DSNAntenna, DSNReceiver};
+CAN.MinimumElevationAngle = 7.0;
+CAN.IonosphereModel       = 'None';
+CAN.TroposphereModel      = 'None';
+
+Create GroundStation GDS;  
+GDS.CentralBody = Earth;
+GDS.StateType = Cartesian;
+GDS.HorizonReference = Ellipsoid;
+GDS.Location1 = -2353.621251;
+GDS.Location2 = -4641.341542;
+GDS.Location3 = 3677.052370;
+GDS.Id = '33333';
+GDS.AddHardware = {DSNTransmitter, DSNAntenna, DSNReceiver};
+GDS.MinimumElevationAngle = 7.0;
+GDS.IonosphereModel       = 'None';
+GDS.TroposphereModel      = 'None';
+
+Create GroundStation MAD;  
+MAD.CentralBody = Earth;
+MAD.StateType = Cartesian;
+MAD.HorizonReference = Ellipsoid;
+MAD.Location1 = 4849.519988;
+MAD.Location2 = -0360.641653;
+MAD.Location3 = 4114.504590;
+MAD.Id = '44444';
+MAD.AddHardware = {DSNTransmitter, DSNAntenna, DSNReceiver};
+MAD.MinimumElevationAngle = 7.0;
+MAD.IonosphereModel       = 'None';
+MAD.TroposphereModel      = 'None';
+
+Create GroundStation VE7TIL;
+GMAT VE7TIL.OrbitColor = Thistle;
+GMAT VE7TIL.TargetColor = DarkGray;
+GMAT VE7TIL.CentralBody = Earth;
+GMAT VE7TIL.StateType = Spherical;
+GMAT VE7TIL.HorizonReference = Ellipsoid;
+GMAT VE7TIL.Location1 = 49.43479333333333;
+GMAT VE7TIL.Location2 = 236.33117;
+GMAT VE7TIL.Location3 = 0.04;
+GMAT VE7TIL.Id = '1';
+GMAT VE7TIL.AddHardware = {DSNAntenna, DSNReceiver};
+GMAT VE7TIL.IonosphereModel = 'None';
+GMAT VE7TIL.TroposphereModel = 'None';
+GMAT VE7TIL.DataSource = 'Constant';
+GMAT VE7TIL.Temperature = 295.1;
+GMAT VE7TIL.Pressure = 1013.5;
+GMAT VE7TIL.Humidity = 55;
+GMAT VE7TIL.MinimumElevationAngle = 0;
+
+Create GroundStation ARG;
+GMAT ARG.OrbitColor = Thistle;
+GMAT ARG.TargetColor = DarkGray;
+GMAT ARG.CentralBody = Earth;
+GMAT ARG.StateType = Spherical;
+GMAT ARG.HorizonReference = Ellipsoid;
+GMAT ARG.Location1 = -38.192607;
+GMAT ARG.Location2 = 289.851595
+GMAT ARG.Location3 = 260;
+GMAT ARG.Id = '666';
+GMAT ARG.AddHardware = {DSNTransmitter, DSNAntenna, DSNReceiver};
+GMAT ARG.IonosphereModel = 'None';
+GMAT ARG.TroposphereModel = 'None';
+GMAT ARG.DataSource = 'Constant';
+GMAT ARG.Temperature = 295.1;
+GMAT ARG.Pressure = 1013.5;
+GMAT ARG.Humidity = 55;
+GMAT ARG.MinimumElevationAngle = -90;
+
+Create GroundStation CHN;
+GMAT CHN.OrbitColor = Thistle;
+GMAT CHN.TargetColor = DarkGray;
+GMAT CHN.CentralBody = Earth;
+GMAT CHN.StateType = Spherical;
+GMAT CHN.HorizonReference = Ellipsoid;
+GMAT CHN.Location1 = 46.48333333;
+GMAT CHN.Location2 = 130.7666666667
+GMAT CHN.Location3 = 100;
+GMAT CHN.Id = '666';
+GMAT CHN.AddHardware = {DSNTransmitter, DSNAntenna, DSNReceiver};
+GMAT CHN.IonosphereModel = 'None';
+GMAT CHN.TroposphereModel = 'None';
+GMAT CHN.DataSource = 'Constant';
+GMAT CHN.Temperature = 295.1;
+GMAT CHN.Pressure = 1013.5;
+GMAT CHN.Humidity = 55;
+GMAT CHN.MinimumElevationAngle = -90;
+
+
+
+
+
+Create ErrorModel DSNRangeRate;
+GMAT DSNRangeRate.Type = 'RangeRate';
+GMAT DSNRangeRate.NoiseSigma = 1e-10;
+GMAT DSNRangeRate.Bias = 0;
+GMAT DSNRangeRate.BiasSigma = 1e+70;
+
+Create ErrorModel DSNrange;
+DSNrange.Type             = 'DSN_SeqRange';
+DSNrange.NoiseSigma       = 10.63;
+DSNrange.Bias             = 0.0;
+
+Create ErrorModel DSNdoppler;
+DSNdoppler.Type       		= 'DSN_TCP';
+DSNdoppler.NoiseSigma		= 0.0282;
+DSNdoppler.Bias  				= 0.0;
+
+CAN.ErrorModels           = {DSNrange, DSNdoppler};
+GDS.ErrorModels           = {DSNrange, DSNdoppler};
+MAD.ErrorModels           = {DSNrange, DSNdoppler};
+GMAT VE7TIL.ErrorModels = {DSNRangeRate};
+GMAT ARG.ErrorModels = {DSNRangeRate};
+GMAT CHN.ErrorModels = {DSNRangeRate};
+
+%-----------------------------------------------------------------------------------------
+%% 	Define the types of measurements to be simulated
+%-----------------------------------------------------------------------------------------
+
+Create TrackingFileSet DSNsimData;
+%DSNsimData.AddTrackingConfig = {{CAN, Tianwen1, CAN}, 'DSN_SeqRange'};   
+%SNsimData.AddTrackingConfig = {{CAN, Tianwen1, CAN},'DSN_TCP'}; 
+%DSNsimData.AddTrackingConfig = {{GDS, Tianwen1, GDS}, 'DSN_SeqRange'};   
+%DSNsimData.AddTrackingConfig = {{GDS, Tianwen1, GDS},'DSN_TCP'};
+%DSNsimData.AddTrackingConfig = {{MAD, Tianwen1, MAD}, 'DSN_SeqRange'};   
+%DSNsimData.AddTrackingConfig = {{MAD, Tianwen1, MAD},'DSN_TCP'};
+DSNsimData.AddTrackingConfig = {{CHN, Tianwen1, VE7TIL},'RangeRate'};
+                   
+DSNsimData.FileName 						= {'refined_ve7til.gmd'};
+%DSNsimData.RampTable 				   = {'../data/navdata/Simulate DSN Range and Doppler Data 3 weeks.rmp'};
+DSNsimData.UseLightTime 				= true;
+DSNsimData.UseRelativityCorrection 	= true;
+DSNsimData.UseETminusTAI 				= true;
+DSNsimData.SimDopplerCountInterval 	= 10.0;
+DSNsimData.SimRangeModuloConstant 	= 3.3554432e+07;
+
+%-----------------------------------------------------------------------------------------
+%%   Create and configure Force model and propagator.
+%-----------------------------------------------------------------------------------------
+
+Create ForceModel ForceModel;
+Create Propagator Prop;
+GMAT ForceModel.CentralBody = Mars;
+ForceModel.PrimaryBodies = {Mars};
+GMAT ForceModel.PointMasses = {Earth, Luna, Mercury, Venus, Jupiter, Sun, Saturn, Neptune, Uranus, Pluto};
+GMAT ForceModel.Drag = None;
+GMAT ForceModel.SRP = Off;
+GMAT ForceModel.RelativisticCorrection = On;
+GMAT ForceModel.ErrorControl = None;
+Prop.FM           = ForceModel;
+Prop.MinStep              = 0;
+%-----------------------------------------------------------------------------------------
+%%		Create and configure Simulator object
+%-----------------------------------------------------------------------------------------
+
+Create Simulator Sim;
+Sim.AddData             = {DSNsimData};
+Sim.EpochFormat    		= UTCGregorian;
+Sim.InitialEpoch        = '10 Feb 2021 00:00:00.000';
+Sim.FinalEpoch          = '20 Feb 2021 00:00:00.000';
+Sim.MeasurementTimeStep = 3600;
+Sim.Propagator          = Prop;
+Sim.AddNoise = On
+
+%-----------------------------------------------------------------------------------------
+%%		Run the mission 
+%-----------------------------------------------------------------------------------------
+
+BeginMissionSequence
+ 
+RunSimulator Sim
