@@ -284,7 +284,7 @@ GMAT Sim.AddData = {VE7TILData};
 GMAT Sim.Propagator = Prop
 GMAT Sim.EpochFormat = UTCGregorian;
 GMAT Sim.InitialEpoch = '15 Feb 2021 00:00:00'; %  2020-10-13 03:36:52.877
-GMAT Sim.FinalEpoch = '21 Feb 2021 06:00:00'; % 2020-10-13 09:40:45.898 
+GMAT Sim.FinalEpoch = '22 Feb 2021 06:00:00'; % 2020-10-13 09:40:45.898 
 GMAT Sim.MeasurementTimeStep = 60;
 GMAT Sim.AddNoise = Off;
 

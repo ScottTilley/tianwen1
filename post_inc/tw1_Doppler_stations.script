@@ -8,6 +8,20 @@ Create CoordinateSystem MarsInertial;
 GMAT MarsInertial.Origin = Mars;
 GMAT MarsInertial.Axes = BodyInertial;
 
+
+%Create Spacecraft Tianwen1;
+%GMAT Tianwen1.DateFormat = UTCGregorian;
+%GMAT Tianwen1.Epoch = '20 Feb 2021 11:46:24.093';
+%GMAT Tianwen1.CoordinateSystem = MarsInertial;
+%GMAT Tianwen1.DisplayStateType = Keplerian;
+%GMAT Tianwen1.SMA = 46022.0;
+%GMAT Tianwen1.ECC = 0.9205923254095867;
+%GMAT Tianwen1.INC = 87.31457306934773;
+%GMAT Tianwen1.RAAN = 112.2786488983284;
+%GMAT Tianwen1.AOP = 170.1549976911551;
+%GMAT Tianwen1.TA = 315.5;
+
+%Post inclination burn state vector, Daniel believes this is an aspirational target not actual.
 Create Spacecraft Tianwen1;
 Tianwen1.DateFormat = UTCGregorian;
 Tianwen1.CoordinateSystem = MarsInertial;
@@ -222,8 +236,8 @@ Prop.MinStep              = 0;
 Create Simulator Sim;
 Sim.AddData             = {DSNsimData};
 Sim.EpochFormat    		= UTCGregorian;
-Sim.InitialEpoch        = '10 Feb 2021 00:00:00.000';
-Sim.FinalEpoch          = '21 Feb 2021 00:00:00.000';
+Sim.InitialEpoch        = '14 Feb 2021 21:00:00.000';
+Sim.FinalEpoch          = '22 Feb 2021 07:00:00.000';
 Sim.MeasurementTimeStep = 60;
 Sim.Propagator          = Prop;
 Sim.AddNoise = On
